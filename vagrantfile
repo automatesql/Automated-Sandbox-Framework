@@ -1,0 +1,84 @@
+=begin
+Copyright © 2024 AutomateSQL, LLC - https://www.automatesql.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of 
+this software and associated documentation files (the “Software”), to deal in the Software without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, 
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to 
+whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies 
+or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+=end
+
+=begin
+This example vagrantfile will create 5 virtual machines by default.  Be sure
+to modify the name, memory, cpus, vnet, and nat_device parameters for your environment.
+
+The config.ssh.password will need to match the password you provided when creating the image.
+=end
+
+Vagrant.configure("2") do |config|
+
+    machines = [ 
+             { name: "DC1", memory: 4096, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "FALSE" } ,
+             { name: "SRV1", memory: 8192, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "FALSE" } ,
+             { name: "SQL1", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" } ,
+             { name: "SQL2", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" },
+             { name: "SQL3", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" }
+    
+    ]
+    
+    #config.vm.usable_port_range = 8500..8999
+    config.vm.communicator = "winssh"
+    config.vm.guest = :windows
+    config.vm.box = "C:/Automated-Sandbox-Framework/Win2025/output/win2025_gui.box" #"automatesql/win2025"
+    config.ssh.username = "Administrator"
+    config.ssh.password = "packer"
+    config.winssh.connect_timeout = 30
+
+    #Loop through the machines and configure each one
+    machines.each do |machine|
+             
+          config.vm.define machine[:name] do |node|
+
+            #here we'll add additional disks if specified
+            if machine[:additional_disks] == "TRUE"
+              node.vm.disk :disk, name: "tempdb", size: "10GB"
+              node.vm.disk :disk, name: "data", size: "60GB"
+              node.vm.disk :disk, name: "log", size: "40GB"
+            end
+           
+            node.vm.provision "shell", 
+            run: "once",
+            name: "Set hostname",
+            inline: "powershell rename-computer -NewName '#{machine[:name]}' -Restart",
+            privileged: true
+          
+          node.vm.provider "vmware_desktop" do |mybasebox|
+            mybasebox.gui = true
+            mybasebox.allowlist_verified = :disable_warning
+            mybasebox.nat_device = machine[:nat_device]
+            mybasebox.vmx["displayname"] = machine[:name]
+            mybasebox.vmx["memsize"] = machine[:memory]
+            mybasebox.vmx["numvcpus"] = machine[:cpus]
+            mybasebox.vmx["cpuid.coresPerSocket"] = machine[:cpus]
+            mybasebox.vmx["vvtd.enable"] = "TRUE" #If you require nested virtualization, leave this set to TRUE.
+            mybasebox.vmx["vhv.enable"] = "TRUE" #If you require nested virtualization, leave this set to TRUE.
+            mybasebox.vmx["vpmc.enable"] = "FALSE"
+            mybasebox.vmx["ethernet0.connectiontype"] = "custom"
+            mybasebox.vmx["ethernet0.vnet"] = machine[:vnet]
+          end
+        end
+      end
+    end
+      
+    
