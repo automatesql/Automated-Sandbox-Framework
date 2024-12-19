@@ -96,12 +96,14 @@ packer init win2025.pkr.hcl
 
 ### Running packer build
 #### Build the .box file.
+Start VMware Workstation Pro prior to running packer build.
+
 ```powershell
 cd path\to\win2025.pkr.hcl
 packer build --var-file="variables.pkrvars.hcl" win2025.pkr.hcl
 ```
 
-This step will take several minutes to complete. VMware Workstation will start and you'll see the image being built alont with updates being applied.
+This step will take several minutes to complete. You'll see the image being built in VMware Workstation Pro.
 
 ## Using the vagrantfile to build your sandbox.
 The example vagrantfile will setup 5 VMs.  Modify the machines array as needed:
