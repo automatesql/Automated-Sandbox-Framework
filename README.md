@@ -34,7 +34,7 @@ The included Vagrantfile can create 5 virtual machines, with three of them autom
 
 ### Required Software
 
-1. [VMware Workstation Pro 17 (Chocolatey Install)](https://www.youtube.com/watch?v=CidERWH9YdE)
+1. [VMware Workstation Pro 17 (How to install using Chocolatey)](https://www.youtube.com/watch?v=CidERWH9YdE)
 2. [HashiCorp Packer](https://www.packer.io/)
 3. [HashiCorp Vagrant](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
 4. [Vagrant VMware Utility](https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility)
