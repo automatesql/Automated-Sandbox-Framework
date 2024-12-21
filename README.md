@@ -1,13 +1,13 @@
 # Automated Sandbox Framework
 
 ### Introduction
-I built this framework to quickly spin up sandbox environments without needing to manually install Windows each time.  It's also used by students enrolled in my courses hosted at https://www.automatesql.com which focus on SQL Server builds using Ansible.
+I built this framework to quickly spin up sandbox environments without needing to install Windows each time manually.  It's also used by students in my courses hosted at https://www.automatesql.com, focusing on SQL Server builds using Ansible.
 
 The **Automated Sandbox Framework** provides all the resources you need—HashiCorp Packer HCL templates, PowerShell scripts, autounattend files, and Vagrantfiles—to build fully automated virtual sandbox environments.
 
 By default, it creates a Windows Server 2025 Standard Evaluation image with SSH enabled. On the first boot, each VM is sysprepped to ensure a unique SID is generated.
 
-The included Vagrantfile can create 5 virtual machines. For a more realistic scenario, consider setting up a domain controller (DC1).  Additional secondary disks can be added manually using the VMware Workstation Pro GUI, or by configuring the vagrant file to use the Vagrant [Disk](https://developer.hashicorp.com/vagrant/docs/disks/configuration).  However, it's not currently included.
+The included Vagrantfile can create 5 virtual machines. Consider setting up a domain controller (DC1) for a more realistic scenario.  Additional secondary disks can be added manually using the VMware Workstation Pro GUI or by configuring the vagrant file to use the Vagrant [Disk](https://developer.hashicorp.com/vagrant/docs/disks/configuration).  However, it's not currently included.
 
 **Example Machine Roles:**
 - **DC1:** Domain Controller
@@ -43,10 +43,6 @@ The included Vagrantfile can create 5 virtual machines. For a more realistic sce
 
 ---
 
-### Screenshot of virtual environment
-<img width="800" alt="ASF_Virtual_Environment" src="https://github.com/user-attachments/assets/d7c11166-40d3-43aa-a402-ffa14454408e" />
-
-
 ## Building the Windows Server 2025 Evaluation Image
 
 The `win2025.pkr.hcl` template leverages Packer to:
@@ -71,7 +67,7 @@ The `win2025.pkr.hcl` template leverages Packer to:
    - `scripts/unattend.xml`: Lines 64, 98
 
 2. **Time Zone:**  
-   Edit `unattend.xml` to set your preferred time zone (default is Central Standard Time).
+   Edit `unattend.xml` to set your preferred time zone (the default is Central Standard Time).
 
 3. **Windows Server Edition:**  
    By default, the template uses Standard Evaluation (Index 2). Modify `Autounattend.xml` if you need a different edition:  
@@ -84,14 +80,14 @@ The `win2025.pkr.hcl` template leverages Packer to:
 
 ### Updating `variables.pkrvars.hcl`
 
-- Update `iso_checksum`. To get the iso checksum use `Get-FileHash pathToISO` in PowerShell.
+- Update `iso_checksum`. To get the iso checksum, use `Get-FileHash pathToISO` in PowerShell.
 - Adjust other variables as needed.
 
 ---
 
 ### Running `packer init`
 
-Before building, run `packer init` to fetch required plugins:
+Before building, run `packer init` to fetch the required plugins:
 
 ```cmd
 cd path\to\win2025.pkr.hcl
@@ -110,7 +106,7 @@ packer build --var-file="variables.pkrvars.hcl" win2025.pkr.hcl
 This step will take several minutes to complete. You'll see the image being built in VMware Workstation Pro.
 
 ## Using the vagrantfile to build your sandbox.
-The example vagrantfile will setup 5 VMs.  Modify the machines array as needed:
+The example vagrantfile will create 5 VMs.  Modify the machines array as needed:
 
 ```ruby
 machines = [ 
@@ -131,10 +127,14 @@ Open either a command window and navigate to the directory where the vagrantfile
 
 VMware Workstation will create the VMs. Expect a few reboots on the initial run. Subsequent startups will be much faster.
 
-- To shutdown all VMs run `vagrant halt`.
+- To shut down all VMs, run `vagrant halt`.
 
 - To completely destroy all VMs created by this vagrantfile run `vagrant destroy`.
 
 For more vagrant commands see this [link](https://developer.hashicorp.com/vagrant/docs)
 
-This framework dramatically reduces manual setup time, making it easy to quickly spin up multiple, fully-configured Windows Server environments for testing, development, or lab scenarios.
+This framework dramatically reduces manual setup time, making it easy to spin up multiple, fully configured Windows Server environments for testing, development, or lab scenarios.
+
+### Screenshot of virtual environment
+<img width="800" alt="ASF_Virtual_Environment" src="https://github.com/user-attachments/assets/d7c11166-40d3-43aa-a402-ffa14454408e" />
+
