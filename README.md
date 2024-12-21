@@ -110,11 +110,11 @@ The example vagrantfile will create 5 VMs.  Modify the machines array as needed:
 
 ```ruby
 machines = [ 
-  { name: "DC1", memory: 4096, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "FALSE" },
-  { name: "SRV1", memory: 8192, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "FALSE" },
-  { name: "SQL1", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" },
-  { name: "SQL2", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" },
-  { name: "SQL3", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" }
+  { name: "DC1", memory: 4096, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8"},
+  { name: "SRV1", memory: 8192, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8" },
+  { name: "SQL1", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8" },
+  { name: "SQL2", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8" },
+  { name: "SQL3", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8" }
 ]
 ```
 - Set config.vm.box to the path of your new .box file.
