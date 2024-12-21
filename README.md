@@ -43,6 +43,10 @@ The included Vagrantfile can create 5 virtual machines. For a more realistic sce
 
 ---
 
+### Screenshot of virtual environment
+<img width="800" alt="ASF_Virtual_Environment" src="https://github.com/user-attachments/assets/d7c11166-40d3-43aa-a402-ffa14454408e" />
+
+
 ## Building the Windows Server 2025 Evaluation Image
 
 The `win2025.pkr.hcl` template leverages Packer to:
