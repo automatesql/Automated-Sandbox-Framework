@@ -134,4 +134,3 @@ VMware Workstation will create the VMs. Expect a few reboots on the initial run.
 For more vagrant commands see this [link](https://developer.hashicorp.com/vagrant/docs)
 
 This framework dramatically reduces manual setup time, making it easy to quickly spin up multiple, fully-configured Windows Server environments for testing, development, or lab scenarios.
-
