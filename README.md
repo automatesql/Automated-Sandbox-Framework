@@ -5,9 +5,9 @@ I built this framework to quickly spin up sandbox environments without needing t
 
 The **Automated Sandbox Framework** provides all the resources you need—HashiCorp Packer HCL templates, PowerShell scripts, autounattend files, and Vagrantfiles—to build fully automated virtual sandbox environments.
 
-By default, it creates a Windows Server 2025 Standard Evaluation image with SSH enabled. On the first boot, each VM is sysprepped to ensure a unique SID.
+By default, it creates a Windows Server 2025 Standard Evaluation image with SSH enabled. On the first boot, each VM is sysprepped to ensure a unique SID is generated.
 
-The included Vagrantfile can create 5 virtual machines, with three of them automatically receiving additional disks. For a more realistic scenario, consider setting up a domain controller (DC1).
+The included Vagrantfile can create 5 virtual machines. For a more realistic scenario, consider setting up a domain controller (DC1).  Additional secondary disks can be added manually using the VMware Workstation Pro GUI, or by configuring the vagrant file to use the Vagrant [Disk](https://developer.hashicorp.com/vagrant/docs/disks/configuration).  However, it's not currently included.
 
 **Example Machine Roles:**
 - **DC1:** Domain Controller
@@ -26,9 +26,9 @@ The included Vagrantfile can create 5 virtual machines, with three of them autom
    See [this link](https://community.broadcom.com/vmware-cloud-foundation/communities/community-home/digestviewer/viewthread?MessageKey=e6e27471-43e1-48e7-a355-abe6dd78428d&CommunityKey=fb707ac3-9412-4fad-b7af-018f5da56d9f) for details.
 
 2. **Hardware:**  
-   - **CPU:** x64 with virtualization support  
-   - **Memory:** 16 GB minimum (more may be needed to support larger environments)  
-   - **Storage:** At least 128 GB free
+   - **CPU:** x64 with virtualization support  .
+   - **Memory:** 16 GB minimum (more may be needed to support larger environments).
+   - **Storage:** At least 128 GB free.
 
 ---
 
@@ -89,7 +89,7 @@ The `win2025.pkr.hcl` template leverages Packer to:
 
 Before building, run `packer init` to fetch required plugins:
 
-```powershell
+```cmd
 cd path\to\win2025.pkr.hcl
 packer init win2025.pkr.hcl
 ```
@@ -98,7 +98,7 @@ packer init win2025.pkr.hcl
 #### Build the .box file.
 Start VMware Workstation Pro prior to running packer build.
 
-```powershell
+```cmd
 cd path\to\win2025.pkr.hcl
 packer build --var-file="variables.pkrvars.hcl" win2025.pkr.hcl
 ```
@@ -121,7 +121,7 @@ machines = [
 - Set config.ssh.password to the password used during image creation.
 
 ### Running vagrant up
-Open either a PowerShell or command window and navigate to the directory where the vagrantfile resides.
+Open either a command window and navigate to the directory where the vagrantfile resides.
 
 - Run `vagrant up`.
 

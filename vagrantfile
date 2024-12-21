@@ -20,8 +20,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 =begin
-This example vagrantfile will create 5 virtual machines by default.  Be sure
-to modify the name, memory, cpus, vnet, and nat_device parameters for your environment.
+This example vagrantfile will create 5 virtual machines by default. Modify the name, memory, cpus, vnet, and nat_device parameters for your environment.  
+If you don't require this many machines simply comment out the lines and the comma preciding it.  Need more?
+Add a line and modify the parameters.
 
 The config.ssh.password will need to match the password you provided when creating the image.
 =end
@@ -29,11 +30,11 @@ The config.ssh.password will need to match the password you provided when creati
 Vagrant.configure("2") do |config|
 
     machines = [ 
-             { name: "DC1", memory: 4096, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "FALSE" } ,
-             { name: "SRV1", memory: 8192, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "FALSE" } ,
-             { name: "SQL1", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" } ,
-             { name: "SQL2", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" },
-             { name: "SQL3", memory: 8192, cpus: 8, vnet: "VMnet8", nat_device: "vmnet8", additional_disks: "TRUE" }
+             { name: "DC1", memory: 2048, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8" } ,
+             { name: "SRV1", memory: 2048, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8" } ,
+             { name: "SQL1", memory: 2048, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8" } ,
+             { name: "SQL2", memory: 2048, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8" },
+             { name: "SQL3", memory: 2048, cpus: 4, vnet: "VMnet8", nat_device: "vmnet8" }
     
     ]
     
@@ -49,14 +50,7 @@ Vagrant.configure("2") do |config|
     machines.each do |machine|
              
           config.vm.define machine[:name] do |node|
-
-            #here we'll add additional disks if specified
-            if machine[:additional_disks] == "TRUE"
-              node.vm.disk :disk, name: "tempdb", size: "10GB"
-              node.vm.disk :disk, name: "data", size: "60GB"
-              node.vm.disk :disk, name: "log", size: "40GB"
-            end
-           
+    
             node.vm.provision "shell", 
             run: "once",
             name: "Set hostname",
