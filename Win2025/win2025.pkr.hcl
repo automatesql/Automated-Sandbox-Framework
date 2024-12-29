@@ -69,10 +69,6 @@ build {
     scripts      = ["scripts/vmware-tools.ps1"]
   }
 
-  provisioner "powershell" {
-    scripts = ["scripts/setup.ps1"]
-  }
-
   provisioner "file" {
     source = "scripts/unattend.xml"
     destination = "C:/Windows/Panther/unattend.xml"
@@ -95,7 +91,6 @@ build {
   provisioner "windows-restart" {
     restart_timeout = "30m"
   }
-
 
   provisioner "powershell" {
     scripts = ["scripts/install-windows-updates.ps1"]
