@@ -34,7 +34,15 @@ The included Vagrantfile can create 5 virtual machines. Consider setting up a do
 
 ### Required Software
 
-1. [VMware Workstation Pro 17 (How to install using Chocolatey)](https://www.youtube.com/watch?v=CidERWH9YdE)
+1. [VMware Workstation Pro 17 (How to install using Chocolatey)](https://www.youtube.com/watch?v=CidERWH9YdE) (Currently this method is broken.  Follow these steps instead - 
+
+   Create a Broadcom account at - https://profile.broadcom.com/web/registration
+   
+   Login at https://support.broadcom.com/web/ecx/home using your new account.
+   
+   Go to https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware Workstation Pro&freeDownloads=true.
+   
+   Select VMware Workstation Pro (version) for Windows and proceed to download and install the software. )
 2. [HashiCorp Packer](https://www.packer.io/)
 3. [HashiCorp Vagrant](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
 4. [Vagrant VMware Utility](https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility)
