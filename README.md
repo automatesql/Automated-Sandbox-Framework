@@ -30,6 +30,9 @@ The included Vagrantfile can create 5 virtual machines. Consider setting up a do
    - **Memory:** 16 GB minimum (more may be needed to support larger environments).
    - **Storage:** At least 128 GB free.
 
+3. **Precheck:**
+   - Run the precheck-virtualizationsupport.ps1 script as an Administrator.  This script will check your system for potential issues with the lab setup.
+
 ---
 
 ### Required Software
