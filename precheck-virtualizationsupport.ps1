@@ -18,7 +18,7 @@ Write-Host "   [PASS] Script is running with Administrator privileges." -Foregro
 # --- Check 2: Hardware Virtualization ---
 Write-Host "2. Checking for Hardware Virtualization Support..." -ForegroundColor Cyan
 $systemInfo = systeminfo.exe
-if ($systemInfo -match "Virtualization Enabled in Firmware: Yes") {
+if ($systemInfo -match "Virtualization Enabled in Firmware: Yes" -or $systemInfo -match "A hypervisor has been detected. Features required for Hyper-V will not be displayed.") {
     Write-Host "   [PASS] Hardware virtualization (Intel VT-x / AMD-V) is enabled in the BIOS/UEFI." -ForegroundColor Green
 } else {
     Write-Host "   [FAIL] Hardware virtualization is not enabled in your BIOS/UEFI. You will need to reboot your computer, enter the BIOS/UEFI settings, and enable 'Intel VT-x' or 'AMD-V'." -ForegroundColor Red
